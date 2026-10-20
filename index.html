@@ -7,7 +7,7 @@
     <link rel="icon" href="data:,">
     <style>
         body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f7f6; color: #333; }
-        .container { max-width: 600px; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin: 0 auto; }
+        .container { max-width: 650px; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); margin: 0 auto; }
         h2 { margin-top: 0; text-align: center; color: #2c3e50; }
         label { font-weight: bold; display: block; margin-top: 15px; }
         input, select, button { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
@@ -66,19 +66,14 @@
         
         resultsDiv.style.display = 'none';
         errorDiv.innerText = '';
-        resultsDiv.innerHTML = '<i>Calculating factors... Please wait.</i>';
+        resultsDiv.innerHTML = '<i>Calculating factors via Render backend... Please wait.</i>';
         resultsDiv.style.display = 'block';
 
-        var pVal = parseInt(document.getElementById('p').value, 10);
-        var modeVal = document.getElementById('mode').value;
-        var cVal = parseInt(document.getElementById('c').value, 10);
-        var polyVal = document.getElementById('poly').value;
-
         var payload = {
-            p: pVal,
-            mode: modeVal,
-            c: cVal,
-            poly: polyVal
+            p: parseInt(document.getElementById('p').value, 10),
+            mode: document.getElementById('mode').value,
+            c: parseInt(document.getElementById('c').value, 10),
+            poly: document.getElementById('poly').value
         };
 
         fetch('https://polynomial-factor.onrender.com/factor', {
@@ -100,9 +95,9 @@
 
             var html = '<strong>Status:</strong> Success<br>';
             html += '<strong>Execution Time:</strong> ' + data.time + ' seconds<br>';
-            html += '<strong>Degree:</strong> ' + data.poly_degree + '<br>';
+            html += '<strong>Polynomial Degree:</strong> ' + data.poly_degree + '<br>';
             html += '<strong>Leading Coefficient:</strong> ' + data.lead_coeff + '<br>';
-            html += '<strong>Factors Found (' + data.count + '):</strong><br><br>';
+            html += '<strong>Factors Count:</strong> ' + data.count + '<br><br>';
 
             data.factors.forEach(function(f, idx) {
                 html += '<div class="factor">';
